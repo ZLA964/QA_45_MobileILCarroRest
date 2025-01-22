@@ -2,7 +2,7 @@ package config;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
+
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class AppiumConfig {
 
     @AfterMethod
     public  void tearDown(){
-       driver.quit();
+      driver.quit();
     }
 
 

@@ -27,7 +27,7 @@ public class BaseScreen {
             return false;
         }
     }
-
+/*/
     public void pause(int time) {
         try {
             Thread.sleep(1000L*time);
@@ -35,7 +35,7 @@ public class BaseScreen {
             throw new RuntimeException(e);
         }
     }
-
+*/
     public void clickWait(AndroidElement element, int time){
         new WebDriverWait(driver,time)
                 .until(ExpectedConditions.elementToBeClickable(element)).click();

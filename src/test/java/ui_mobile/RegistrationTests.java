@@ -36,7 +36,7 @@ public class RegistrationTests extends AppiumConfig {
                 .build();
         RegistrationScreen registrationScreen = new RegistrationScreen(driver);
         registrationScreen.typeUserData(user);
-        logger.info("\n\t=== user for registration === \n\t" + user.toString() + "\n\t=====  \t\t\t=====");
+        logger.info("\n\t=== user for registration === \n\t" + user + "\n\t=====  \t\t\t=====");
         registrationScreen.clickBtnYalla();
         boolean regSuccess = searchScreen.checkPopUpRegSuccess();
         logger.info(" registration success is --> " + regSuccess);

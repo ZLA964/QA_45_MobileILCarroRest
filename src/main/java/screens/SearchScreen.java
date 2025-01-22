@@ -34,7 +34,8 @@ public class SearchScreen extends BaseScreen{
 
     public boolean checkPopUpRegSuccess() {
         try {
-            WebElement regSuccess = new WebDriverWait(driver, 7)
+//            WebElement regSuccess =
+                    new WebDriverWait(driver, 7)
                     .until(ExpectedConditions.visibilityOf(popUpRegSuccess));
             return true;
         } catch (TimeoutException e) {
