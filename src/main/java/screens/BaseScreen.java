@@ -26,7 +26,7 @@ public class BaseScreen {
             return new WebDriverWait(driver, time)
                     .until(ExpectedConditions.textToBePresentInElement(element, text));
         } catch (TimeoutException e) {
-            e.printStackTrace();
+       //     e.printStackTrace();
             System.out.println("textInElementPresent --> created exception");
             return false;
         }

@@ -25,7 +25,7 @@ public class RandomUtils_lvl {
         int charCount = characters.length();
         return new Random().ints(0, charCount)  // Generate a stream of random indices
   //              .distinct()  // Ensure unique indices
-                .limit(length >= charCount ? charCount : length)  // Limit the stream length to the specified length or the maximum unique characters
+                .limit(Math.min(length, charCount))  // Limit the stream length to the specified length or the maximum unique characters
                 .mapToObj(characters::charAt)  // Convert indices to characters
                 .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)  // Collect characters into a StringBuilder
                 .toString();  // Convert StringBuilder to a String

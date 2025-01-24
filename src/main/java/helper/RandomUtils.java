@@ -14,7 +14,7 @@ public class RandomUtils {
     public static String generateString(int length) {
         String characters = "abcdefghijklmnopqrstuvwxyz0123456789";
         char[] randomString = new char[length];
-        int index = 0;
+        int index;
         int charLength = characters.length();
         for (int i = 0; i < length; i++) {
             index = random.nextInt(charLength);
@@ -22,10 +22,12 @@ public class RandomUtils {
         }
         return new String(randomString);
     }
+
+ /*/
     public static String generatePhone(int length) {
         String characters = "0123456789";
         char[] randomString = new char[length];
-        int index = 0;
+        int index;
         int charLength = characters.length();
         for (int i = 0; i < length; i++) {
             index = random.nextInt(charLength);
@@ -33,4 +35,6 @@ public class RandomUtils {
         }
         return new String(randomString);
     }
+
+ */
 }

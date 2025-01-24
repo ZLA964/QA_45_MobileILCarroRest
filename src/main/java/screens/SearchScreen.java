@@ -5,7 +5,7 @@ import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -44,7 +44,7 @@ public class SearchScreen extends BaseScreen {
                     .until(ExpectedConditions.presenceOfElementLocated(By.xpath("/hierarchy/android.widget.Toast")));
             return textInElementPresent(popUpRegSuccess, "Registration success!", 5);
         } catch (StaleElementReferenceException | TimeoutException e) {
-            e.printStackTrace();
+  //          e.printStackTrace();
             System.out.println("Not success registration");
             return false;
         }
