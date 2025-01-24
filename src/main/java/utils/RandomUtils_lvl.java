@@ -3,7 +3,7 @@ package utils;
 import java.util.Random;
 
 
-public class RandomUtils {
+public class RandomUtils_lvl {
 
     static Random random = new Random();
 

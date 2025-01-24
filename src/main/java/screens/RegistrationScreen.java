@@ -39,4 +39,16 @@ public class RegistrationScreen extends BaseScreen{
         clickWait(btnYalla, 3);
     }
 
+    public void typeRegistrationForn(UserDto user) {
+        inputName.sendKeys(user.getFirstName());
+        inputLastName.sendKeys(user.getLastName());
+        inputEmail.sendKeys(user.getUsername());
+        inputPassword.sendKeys(user.getPassword());
+        checkBpx.click();
+        btnYalla.click();
+    }
+
+    public boolean validateMessageSuccess(String message){
+        return textInElementPresent(popUpMessageSuccess, message, 5);
+    }
 }

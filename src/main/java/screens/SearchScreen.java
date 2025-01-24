@@ -43,4 +43,9 @@ public class SearchScreen extends BaseScreen{
             return false;
         }
     }
+
+    public void goToLoginScreen() {
+        clickWait(btnMoreOption, 5);
+       clickWait(btnLogin,5);
+    }
 }

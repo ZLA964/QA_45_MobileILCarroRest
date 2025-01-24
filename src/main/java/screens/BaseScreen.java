@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,6 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BaseScreen {
 
     AppiumDriver<AndroidElement> driver ;
+
+    @FindBy(xpath = "/hierarchy/android.widget.Toast")
+    AndroidElement popUpMessageSuccess;
 
     public BaseScreen(AppiumDriver<AndroidElement> driver) {
         this.driver = driver;

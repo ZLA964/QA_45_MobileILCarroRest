@@ -9,8 +9,10 @@ import org.testng.annotations.Test;
 import screens.RegistrationScreen;
 import screens.SearchScreen;
 import screens.SplashScreen;
-import utils.RandomUtils;
+import utils.RandomUtils_lvl;
 import utils.TestNGListener;
+
+import static helper.RandomUtils.*;
 
 @Listeners(TestNGListener.class)
 public class RegistrationTests extends AppiumConfig {
@@ -25,13 +27,13 @@ public class RegistrationTests extends AppiumConfig {
 
 
     @Test
-    public void registrationPositiveTest(){
+    public void registrationPositiveTest_lvl(){
         UserDto user = UserDto.builder()
-                .firstName(RandomUtils.generateStringTextOnly(4))
+                .firstName(RandomUtils_lvl.generateStringTextOnly(4))
 //                .firstName("Buba")
-                .lastName(RandomUtils.generateStringTextOnly_stream(9))
+                .lastName(RandomUtils_lvl.generateStringTextOnly_stream(9))
 //                .lastName("Kostrov")
-                .username(RandomUtils.generateEmail(7))
+                .username(RandomUtils_lvl.generateEmail(7))
                 .password("Pass123!")
                 .build();
         RegistrationScreen registrationScreen = new RegistrationScreen(driver);
@@ -41,8 +43,19 @@ public class RegistrationTests extends AppiumConfig {
         boolean regSuccess = searchScreen.checkPopUpRegSuccess();
         logger.info(" registration success is --> " + regSuccess);
         Assert.assertTrue(regSuccess);
-
-
-
     }
+
+    @Test
+    public void registrationPositiveTest() {
+        UserDto user = UserDto.builder()
+                .firstName(generateString(5))
+                .lastName(generateString(10))
+                .username(generateEmail(10))
+                .password("Qwerty123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForn(user);
+        Assert.assertTrue(registrationScreen.validateMessageSuccess("Registration success!"));
+    }
+
 }
