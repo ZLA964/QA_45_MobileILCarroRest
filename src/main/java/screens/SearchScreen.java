@@ -2,6 +2,8 @@ package screens;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,7 +25,8 @@ public class SearchScreen extends BaseScreen{
     @FindBy(xpath = "//*[@text='Login']")
     AndroidElement btnLogin;
 
-    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup\n")
+//    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup\n")
+    @FindBy(xpath = "/hierarchy/android.widget.Toast")
     AndroidElement popUpRegSuccess;
 
     public void goToRegistrationScreen(){
@@ -34,11 +37,14 @@ public class SearchScreen extends BaseScreen{
 
     public boolean checkPopUpRegSuccess() {
         try {
-//            WebElement regSuccess =
-                    new WebDriverWait(driver, 7)
-                    .until(ExpectedConditions.visibilityOf(popUpRegSuccess));
-            return true;
-        } catch (TimeoutException e) {
+//            new WebDriverWait(driver, 7)
+//                    .until(ExpectedConditions.visibilityOf(popUpRegSuccess));
+//            return true;
+            new WebDriverWait(driver, 15)
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("/hierarchy/android.widget.Toast")));
+            return  textInElementPresent(popUpRegSuccess, "Registration success!", 5);
+        } catch (StaleElementReferenceException | TimeoutException e) {
+            e.printStackTrace();
             System.out.println("Not success registration");
             return false;
         }
