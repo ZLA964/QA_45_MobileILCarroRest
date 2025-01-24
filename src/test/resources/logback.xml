@@ -10,18 +10,24 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender"> <!--input to file-->
+    <!--    <appender name="FILE" class="ch.qos.logback.core.FileAppender"> &lt;!&ndash;input to file&ndash;&gt;-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>test_logs/log-${bySecond}.log</file>
-        <maxHistory>5</maxHistory>  <!-- keep log file 5 days -->
-        <totalSizeCap>10GB</totalSizeCap> <!-- max total size 10 gb -->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>test_logs/log-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>5</maxHistory>  <!-- keep log file 5 days -->
+            <totalSizeCap>10GB</totalSizeCap> <!-- max total size 10 gb -->
+        </rollingPolicy>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="info"> <!-- levels logging     off/error/warning/info/debug/all  -->
-        <appender-ref ref="FILE" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 
 

@@ -45,5 +45,9 @@ public class BaseScreen {
                 .until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
+    public boolean validatePopUpMessage(String message){
+        return textInElementPresent(popUpMessageSuccess, message, 5);
+    }
+
 
 }

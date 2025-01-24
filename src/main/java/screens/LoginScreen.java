@@ -26,6 +26,11 @@ public class LoginScreen extends BaseScreen{
         btnYalla.click();
     }
 
+    public boolean isLoginSuccess(){
+        return validatePopUpMessage("Login success!");
+    }
+
+
 
 
 }

@@ -12,7 +12,7 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
-        logger.info("\n\t\t=== START === test -> "
+        logger.info("\t=== START === \n\ttest -> "
                 + result.getName()
                 + "  in class: " + result.getTestClass().getName());
 
@@ -21,7 +21,7 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
         ITestListener.super.onTestSuccess(result);
-        logger.info("\n\t\t=== SUCCESS === test -> "
+        logger.info("\t=== SUCCESS === \n\ttest -> "
                 + result.getName()
                 + "  in class: " + result.getTestClass().getName());
     }
@@ -29,7 +29,7 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        logger.info("\n\t\t=== FAIL === test -> "
+        logger.info("\t=== FAIL === \n\ttest -> "
                 + result.getName()
                 + "  in class:" + result.getTestClass().getName());
     }
@@ -37,7 +37,7 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onTestSkipped(ITestResult result) {
         ITestListener.super.onTestSkipped(result);
-        logger.info("\n\t\t=== SKIPP === test -> "
+        logger.info("\t=== SKIPP === \n\ttest -> "
                 + result.getName()
                 + "  in class:" + result.getTestClass().getName());
     }
@@ -46,7 +46,7 @@ public class TestNGListener implements ITestListener {
     public void onStart(ITestContext context) {
         ITestListener.super.onStart(context);
         logger.info("start testing on date--> "
-                + "\n\t\t============ start ============"
+                + "\n\t\t============= start =============\t"
                 + context.getStartDate());
     }
 
@@ -54,7 +54,7 @@ public class TestNGListener implements ITestListener {
     public void onFinish(ITestContext context) {
         ITestListener.super.onFinish(context);
         logger.info("stop testing on date--> "
-                + "\n\t\t============ stop =============="
+                + "\n\t\t============= stop ==============\t"
                 + context.getEndDate());
     }
 
