@@ -16,6 +16,19 @@ public class BaseScreen {
     @FindBy(xpath = "/hierarchy/android.widget.Toast")
     AndroidElement popUpMessageSuccess;
 
+    @FindBy(id = "android:id/parentPanel")
+    AndroidElement popUpPanel;
+
+    @FindBy(id = "android:id/alertTitle")
+    AndroidElement popUpTitle;
+
+    @FindBy(id = "android:id/message")
+    AndroidElement popUpPanelMessage;
+
+    @FindBy(id = "android:id/button1")
+    AndroidElement btnPopUpPanel;
+
+
     public BaseScreen(AppiumDriver<AndroidElement> driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);

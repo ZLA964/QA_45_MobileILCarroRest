@@ -58,4 +58,17 @@ public class RegistrationTests extends AppiumConfig {
         Assert.assertTrue(registrationScreen.validateMessageSuccess("Registration success!"));
     }
 
+    @Test
+    public void registrationNegative_lvl_Test_wrongEmail() {
+        UserDto user = UserDto.builder()
+                .firstName(generateString(5))
+                .lastName(generateString(10))
+                .username(generateString(10))
+                .password("Qwerty123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForn(user);
+        Assert.assertTrue(registrationScreen.validateMessageSuccess("Registration success!"));
+    }
+
 }

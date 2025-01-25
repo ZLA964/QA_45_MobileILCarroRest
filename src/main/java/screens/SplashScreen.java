@@ -38,7 +38,6 @@ public class SplashScreen extends BaseScreen {
             System.out.println("screen was changed");
         }
         return stop - start;
-
     }
 
 }
