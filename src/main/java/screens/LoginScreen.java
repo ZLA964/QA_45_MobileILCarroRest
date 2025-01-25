@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.Arrays;
+
 
 public class LoginScreen extends BaseScreen {
 
@@ -37,26 +37,6 @@ public class LoginScreen extends BaseScreen {
         return validatePopUpMessage("Login success!");
     }
 
-    public boolean isErrorPanel(String text) {
-        try {
-            new WebDriverWait(driver, 5)
-                    .until(ExpectedConditions.visibilityOf(popUpPanel));
-            if (textInElementPresent(popUpTitle, "Error", 1) &&
-                    textInElementPresent(popUpPanelMessage, text, 1)) {
-                btnPopUpPanel.click();
-            } else {
-                System.out.println("popUpTitle -> " + popUpTitle.getText());
-                System.out.println("popUpPanelMessage -> " + popUpPanelMessage.getText());
-                return false;
-            }
-            return true;
-        } catch (TimeoutException | StaleElementReferenceException e) {
-            System.out.println("No PopUP of Error on Login!");
-            System.out.println(e.getMessage());
-//            Arrays.stream(e.getStackTrace()).forEach(System.out::println);
-            return false;
-        }
-    }
 
 
 }
