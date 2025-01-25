@@ -3,11 +3,8 @@ package screens;
 import dto.UserDto;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 
 

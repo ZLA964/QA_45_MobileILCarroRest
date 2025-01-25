@@ -23,7 +23,7 @@ public class RegistrationScreen extends BaseScreen{
     AndroidElement inputPassword;
 
     @FindBy(id = "com.telran.ilcarro:id/checkBoxAgree")
-    AndroidElement checkBpx;
+    AndroidElement checkBox;
     @FindBy(id = "com.telran.ilcarro:id/regBtn")
     AndroidElement btnYalla;
 
@@ -32,7 +32,11 @@ public class RegistrationScreen extends BaseScreen{
         inputLastName.sendKeys(user.getLastName());
         inputEmail.sendKeys(user.getUsername());
         inputPassword.sendKeys(user.getPassword());
-        checkBpx.click();
+
+    }
+
+    public void setCheckBox(){
+        checkBox.click();
     }
 
     public void clickBtnYalla() {
@@ -44,7 +48,7 @@ public class RegistrationScreen extends BaseScreen{
         inputLastName.sendKeys(user.getLastName());
         inputEmail.sendKeys(user.getUsername());
         inputPassword.sendKeys(user.getPassword());
-        checkBpx.click();
+        checkBox.click();
         btnYalla.click();
     }
 

@@ -39,6 +39,7 @@ public class RegistrationTests extends AppiumConfig {
         RegistrationScreen registrationScreen = new RegistrationScreen(driver);
         registrationScreen.typeUserData(user);
         logger.info("\n\t=== user for registration === \n\t" + user + "\n\t=====  \t\t\t=====");
+        registrationScreen.setCheckBox();
         registrationScreen.clickBtnYalla();
         boolean regSuccess = searchScreen.checkPopUpRegSuccess();
         logger.info(" registration success is --> " + regSuccess);
@@ -59,7 +60,66 @@ public class RegistrationTests extends AppiumConfig {
     }
 
     @Test
-    public void registrationNegative_lvl_Test_wrongEmail() {
+    public void registrationNegative_lvl_Test_invalidPassword() {
+        UserDto user = UserDto.builder()
+                .firstName(generateString(5))
+                .lastName(generateString(10))
+                .username(generateEmail(10))
+                .password("Qwerty")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForn(user);
+        Assert.assertTrue(registrationScreen
+                .isErrorPanel("{password= At least 8 characters; Must contain at least 1 " +
+                        "uppercase letter, 1 lowercase letter, and 1 number; Can contain special " +
+                        "characters [@$#^&*!]}"));
+    }
+
+    @Test
+    public void registrationNegative_lvl_Test_blankLastName() {
+        UserDto user = UserDto.builder()
+                .firstName(generateString(5))
+                .lastName(" ")
+                .username(generateEmail(10))
+                .password("Qwerty123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForn(user);
+        Assert.assertTrue(registrationScreen
+                .isErrorPanel("All fields must be filled and agree terms"));
+    }
+
+    @Test
+    public void registrationNegative_lvl_Test_blankName() {
+        UserDto user = UserDto.builder()
+                .firstName(" ")
+                .lastName(generateString(10))
+                .username(generateEmail(10))
+                .password("Qwerty123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForn(user);
+        Assert.assertTrue(registrationScreen
+                .isErrorPanel("All fields must be filled and agree terms"));
+    }
+
+    @Test
+    public void registrationNegative_lvl_Test_noBox() {
+        UserDto user = UserDto.builder()
+                .firstName(generateString(5))
+                .lastName(generateString(10))
+                .username(generateEmail(10))
+                .password("Qwerty123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeUserData(user);
+        registrationScreen.clickBtnYalla();
+        Assert.assertTrue(registrationScreen
+                .isErrorPanel("All fields must be filled and agree terms"));
+    }
+
+    @Test
+    public void registrationNegative_lvl_Test_invalidEmail() {
         UserDto user = UserDto.builder()
                 .firstName(generateString(5))
                 .lastName(generateString(10))
@@ -68,7 +128,8 @@ public class RegistrationTests extends AppiumConfig {
                 .build();
         RegistrationScreen registrationScreen = new RegistrationScreen(driver);
         registrationScreen.typeRegistrationForn(user);
-        Assert.assertTrue(registrationScreen.validateMessageSuccess("Registration success!"));
+        Assert.assertTrue(registrationScreen
+                .isErrorPanel("{username=must be a well-formed email address}"));
     }
 
 }
