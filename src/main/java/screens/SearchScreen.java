@@ -18,16 +18,39 @@ public class SearchScreen extends BaseScreen {
 
     @FindBy(xpath = "//android.widget.ImageView[@content-desc='More options']")
     AndroidElement btnMoreOption;
-
     @FindBy(xpath = "//*[@text='Registration']")
     AndroidElement btnRegistration;
-
     @FindBy(xpath = "//*[@text='Login']")
     AndroidElement btnLogin;
-
-    //    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup\n")
     @FindBy(xpath = "/hierarchy/android.widget.Toast")
     AndroidElement popUpRegSuccess;
+    @FindBy(xpath = "//*[@text='My Cars']")
+    AndroidElement btnMyCars;
+
+    @FindBy(id = "com.telran.ilcarro:id/editLocation")
+    AndroidElement inputLocation;
+    @FindBy(id = "com.telran.ilcarro:id/editFrom")
+    AndroidElement inputFrom;
+    @FindBy(id = "com.telran.ilcarro:id/editTo")
+    AndroidElement inputTo;
+    @FindBy(id = "com.telran.ilcarro:id/searchBtn")
+    AndroidElement btnYallaSearchCar;
+
+    public void typeLocation(String taxt){
+        inputLocation.sendKeys(taxt);
+    }
+
+    public void typeFrom(String text){
+        inputFrom.sendKeys(text);
+    }
+
+    public void typeTo(String text){
+        inputTo.sendKeys(text);
+    }
+
+    public void clickBtnSearchCar(){
+        clickWait(btnYallaSearchCar,3);
+    }
 
     public void goToRegistrationScreen() {
 //        btnMoreOption.click();
@@ -44,7 +67,7 @@ public class SearchScreen extends BaseScreen {
                     .until(ExpectedConditions.presenceOfElementLocated(By.xpath("/hierarchy/android.widget.Toast")));
             return textInElementPresent(popUpRegSuccess, "Registration success!", 5);
         } catch (StaleElementReferenceException | TimeoutException e) {
-  //          e.printStackTrace();
+            //          e.printStackTrace();
             System.out.println("Not success registration");
             return false;
         }
@@ -53,5 +76,14 @@ public class SearchScreen extends BaseScreen {
     public void goToLoginScreen() {
         clickWait(btnMoreOption, 5);
         clickWait(btnLogin, 5);
+    }
+
+    public boolean validateMessageSuccess(String message) {
+        return textInElementPresent(popUpMessageSuccess, message, 5);
+    }
+
+    public void goToMyCarsScreen() {
+        clickWait(btnMoreOption, 5);
+        clickWait(btnMyCars, 5);
     }
 }

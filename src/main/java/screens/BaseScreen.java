@@ -1,14 +1,19 @@
 package screens;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BaseScreen {
 
@@ -81,7 +86,26 @@ public class BaseScreen {
     }
 
     public boolean validatePopUpMessage(String message){
-        return textInElementPresent(popUpMessageSuccess, message, 5);
+        return textInElementPresent(popUpMessageSuccess, message, 6);
+    }
+
+    public void scrollUpScreen(double partOfScreen){
+        int height = driver.manage().window().getSize().getHeight();
+        int width = driver.manage().window().getSize().getWidth();
+        System.out.println(height + " x " + width);
+        // Calculate coordinates for the scroll
+        int startX = width / 2; // Swipe in the middle of the screen
+        int startY = (int) (height * (partOfScreen-0.01)); // Starting point (3/4 of the screen height)
+        int endY = (int) (height * 0.01); // Ending point (1/4 of the screen height)
+
+// Perform the swipe
+        TouchAction<?> touchAction = new TouchAction<>(driver);
+        touchAction
+                .press(PointOption.point(startX, startY)) // Starting point
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1))) // Delay for smooth scrolling
+                .moveTo(PointOption.point(startX, endY)) // Ending point
+                .release() // Release the touch
+                .perform(); // Execute the action
     }
 
 

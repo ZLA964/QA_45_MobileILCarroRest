@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import screens.ErrorScreen;
 import screens.RegistrationScreen;
 import screens.SearchScreen;
 import screens.SplashScreen;
@@ -17,6 +18,8 @@ import static helper.RandomUtils.*;
 @Listeners(TestNGListener.class)
 public class RegistrationTests extends AppiumConfig {
     SearchScreen searchScreen;
+
+    String userName = "bm8hreura5@mail.com";
 
     @BeforeMethod
     public void beforeTest(){
@@ -56,7 +59,7 @@ public class RegistrationTests extends AppiumConfig {
                 .build();
         RegistrationScreen registrationScreen = new RegistrationScreen(driver);
         registrationScreen.typeRegistrationForn(user);
-        Assert.assertTrue(registrationScreen.validateMessageSuccess("Registration success!"));
+        Assert.assertTrue(new SearchScreen(driver).validateMessageSuccess("Registration success!"));
     }
 
     @Test
@@ -132,4 +135,16 @@ public class RegistrationTests extends AppiumConfig {
                 .isErrorPanel("{username=must be a well-formed email address}"));
     }
 
+    @Test
+    public void registrationNegativeTest_duplicateUser() {
+        UserDto user = UserDto.builder()
+                .firstName(generateString(5))
+                .lastName(generateString(10))
+                .username(userName)
+                .password("Qwerty123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForn(user);
+        Assert.assertTrue(new ErrorScreen(driver).validateErrorMessage("User already exists"));
+    }
 }

@@ -23,13 +23,23 @@ public class LoginTests extends AppiumConfig {
     }
 
     @Test
-    public void loginPositiveTest(){
+    public void loginPositive_lvl_Test(){
         loginScreen = new LoginScreen(driver);
         loginScreen.login(UserDto.builder()
                         .username("3mhulpw@gmail.com")
                         .password("Pass123!")
                 .build());
         Assert.assertTrue(loginScreen.isLoginSuccess());
+    }
+
+    @Test
+    public void loginPositiveTest(){
+        loginScreen = new LoginScreen(driver);
+        loginScreen.login(UserDto.builder()
+                .username("3mhulpw@gmail.com")
+                .password("Pass123!")
+                .build());
+        Assert.assertTrue(loginScreen.validatePopUpMessage("Login success"));
     }
 
     @Test
@@ -71,4 +81,15 @@ public class LoginTests extends AppiumConfig {
                 .build());
         Assert.assertTrue(loginScreen.isErrorPanel("All fields must be filled and agree terms"));
     }
+
+    @Test
+    public void loginNegativeTest_emailWhithSpaces(){
+        loginScreen = new LoginScreen(driver);
+        loginScreen.login(UserDto.builder()
+                .username(" 3mhulpw@gmail.com ")
+                .password("Pass123!")
+                .build());
+        Assert.assertTrue(loginScreen.validatePopUpMessage("Login success"));
+    }
+
 }
