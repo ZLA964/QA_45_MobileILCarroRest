@@ -13,9 +13,10 @@ import static helper.RandomUtils.*;
 public class AddNewCarTests extends AppiumConfig {
 
     SearchScreen searchScreen;
+    MyCarsScreen myCarsScreen;
 
     @BeforeMethod
-    public void login(){
+    public void login() {
         new SplashScreen(driver);
         searchScreen = new SearchScreen(driver);
         searchScreen.goToLoginScreen();
@@ -30,10 +31,11 @@ public class AddNewCarTests extends AppiumConfig {
 
 
     @Test
-    public void addNewCarPositiveTest(){
-        new MyCarsScreen(driver).goToAddNewCarScreen();
+    public void addNewCarPositiveTest() {
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
         CarDto car = CarDto.builder()
-                .serialNumber("num-"+generatePhone(6))
+                .serialNumber("num-" + generatePhone(6))
                 .manufacture("ZAZ")
                 .model("969")
                 .city("Haifa")
@@ -45,6 +47,30 @@ public class AddNewCarTests extends AppiumConfig {
                 .about("best of the best")
                 .build();
         new AddMyCarScreen(driver).addNewCar(car);
-        Assert.assertTrue(new MyCarsScreen(driver).validatePopUpMessage("Car was added!"));
+        Assert.assertTrue(myCarsScreen.validatePopUpMessage("Car was added!"));
+    }
+
+    @Test
+    public void addNewCarPositiveTest2() {
+
+
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        myCarsScreen.scrollToLastElementAvto();
+        Assert.assertEquals(myCarsScreen.scrollToLastElementAvto(),car.getSerialNumber());
+//        Assert.assertTrue(myCarsScreen.validatePopUpMessage("Car was added!"));
     }
 }

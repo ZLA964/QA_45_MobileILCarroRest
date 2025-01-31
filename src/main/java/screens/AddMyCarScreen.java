@@ -2,14 +2,15 @@ package screens;
 
 import dto.CarDto;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
+//import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidElement;
+//import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AddMyCarScreen extends BaseScreen{
+public class AddMyCarScreen extends BaseScreen {
     public AddMyCarScreen(AppiumDriver<AndroidElement> driver) {
         super(driver);
     }
@@ -45,31 +46,29 @@ public class AddMyCarScreen extends BaseScreen{
         inputPrice.sendKeys(Double.toString(car.getPricePerDay()));
         inputCarClass.sendKeys(car.getCarClass());
         //scroll
-//        int heigt = driver.manage().window().getSize().getHeight();
-//        int width = driver.manage().window().getSize().getWidth();
-//        System.out.println(heigt + " x "+ width);
+        int heigt = driver.manage().window().getSize().getHeight();
+        int width = driver.manage().window().getSize().getWidth();
+        System.out.println(heigt + " x "+ width);
 //        TouchAction<?> touchAction = new TouchAction<>(driver);
-        //  touchAction.longPress()
-
-        //===================
-        //inputFuel.sendKeys(car.getFuel());
-
-        scrollUpScreen(0.75);
+//        touchAction.longPress(PointOption.point(5, 5 * heigt / 6))
+//                .moveTo(PointOption.point(5, heigt / 6))
+//                .release().perform();
+               scrollUpScreen(0.75);
 
         typeFuel(car.getFuel());
 
 
         inputYear.sendKeys(car.getYear());
-        inputSeats.sendKeys(car.getSeats()+"");
+        inputSeats.sendKeys(car.getSeats() + "");
         inputAbout.sendKeys(car.getAbout());
         btnAddCar.click();
     }
 
     private void typeFuel(String fuel) {
         inputFuel.click();
-        new WebDriverWait(driver,5)
+        new WebDriverWait(driver, 5)
                 .until(ExpectedConditions
                         .elementToBeClickable(
-                                By.xpath("//*[@text='"+fuel+"']"))).click();
+                                By.xpath("//*[@text='" + fuel + "']"))).click();
     }
 }

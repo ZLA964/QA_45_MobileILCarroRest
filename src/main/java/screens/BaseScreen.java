@@ -71,7 +71,7 @@ public class BaseScreen {
             return false;
         }
     }
-/*/
+
     public void pause(int time) {
         try {
             Thread.sleep(1000L*time);
@@ -79,7 +79,7 @@ public class BaseScreen {
             throw new RuntimeException(e);
         }
     }
-*/
+
     public void clickWait(AndroidElement element, int time){
         new WebDriverWait(driver,time)
                 .until(ExpectedConditions.elementToBeClickable(element)).click();
@@ -94,7 +94,7 @@ public class BaseScreen {
         int width = driver.manage().window().getSize().getWidth();
         System.out.println(height + " x " + width);
         // Calculate coordinates for the scroll
-        int startX = width / 2; // Swipe in the middle of the screen
+        int startX = 5;   // width / 2; // Swipe in the middle of the screen
         int startY = (int) (height * (partOfScreen-0.01)); // Starting point (3/4 of the screen height)
         int endY = (int) (height * 0.01); // Ending point (1/4 of the screen height)
 
