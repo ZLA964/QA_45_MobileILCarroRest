@@ -2,9 +2,11 @@ package ui_mobile;
 
 import config.AppiumConfig;
 import dto.UserDto;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import screens.LoginScreen;
+import screens.SearchResultScreen;
 import screens.SearchScreen;
 import screens.SplashScreen;
 
@@ -26,10 +28,16 @@ public class SearchCarTests extends AppiumConfig {
 
     @Test
     public void searchCar_lvl_Test(){
-        searchScreen.typeLocation("Haifa");
+        searchScreen.typeLocation("Rehovot");
         searchScreen.typeFrom("10/03/2025");
         searchScreen.typeTo("27/03/2025");
         searchScreen.clickBtnSearchCar();
+        SearchResultScreen searchResultScreen = new SearchResultScreen(driver);
+//        System.out.println(searchResultScreen.validateOpenSearchResultScreen());
+//        System.out.println(searchResultScreen.notEmptyListOfCars());
+        Assert.assertTrue(searchResultScreen.validateOpenSearchResultScreen()
+                && searchResultScreen.notEmptyListOfCars());
+
 
     }
 
