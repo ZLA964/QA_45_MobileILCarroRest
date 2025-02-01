@@ -46,12 +46,12 @@ public class AddMyCarScreen extends BaseScreen {
         inputPrice.sendKeys(Double.toString(car.getPricePerDay()));
         inputCarClass.sendKeys(car.getCarClass());
         //scroll
-        int heigt = driver.manage().window().getSize().getHeight();
+        int height = driver.manage().window().getSize().getHeight();
         int width = driver.manage().window().getSize().getWidth();
-        System.out.println(heigt + " x "+ width);
+        System.out.println(height + " x "+ width);
 //        TouchAction<?> touchAction = new TouchAction<>(driver);
-//        touchAction.longPress(PointOption.point(5, 5 * heigt / 6))
-//                .moveTo(PointOption.point(5, heigt / 6))
+//        touchAction.longPress(PointOption.point(5, 5 * height / 6))
+//                .moveTo(PointOption.point(5, height / 6))
 //                .release().perform();
                scrollUpScreen(0.75);
 
@@ -70,5 +70,38 @@ public class AddMyCarScreen extends BaseScreen {
                 .until(ExpectedConditions
                         .elementToBeClickable(
                                 By.xpath("//*[@text='" + fuel + "']"))).click();
+    }
+
+    public void addNewCarNoFuel(CarDto car) {
+        inputSerialNumber.sendKeys(car.getSerialNumber());
+        inputManufacture.sendKeys(car.getManufacture());
+        inputModel.sendKeys(car.getModel());
+        inputCity.sendKeys(car.getCity());
+        inputPrice.sendKeys(Double.toString(car.getPricePerDay()));
+        inputCarClass.sendKeys(car.getCarClass());
+        //scroll
+        int height = driver.manage().window().getSize().getHeight();
+        int width = driver.manage().window().getSize().getWidth();
+        scrollUpScreen(0.75);
+  //      typeFuel(car.getFuel());
+        inputYear.sendKeys(car.getYear());
+        inputSeats.sendKeys(car.getSeats() + "");
+        inputAbout.sendKeys(car.getAbout());
+        btnAddCar.click();
+    }
+
+    public void addNewCarNoPrice(CarDto car) {
+        inputSerialNumber.sendKeys(car.getSerialNumber());
+        inputManufacture.sendKeys(car.getManufacture());
+        inputModel.sendKeys(car.getModel());
+        inputCity.sendKeys(car.getCity());
+ //       inputPrice.sendKeys(Double.toString(car.getPricePerDay()));
+        inputCarClass.sendKeys(car.getCarClass());
+        scrollUpScreen(0.75);
+        typeFuel(car.getFuel());
+        inputYear.sendKeys(car.getYear());
+        inputSeats.sendKeys(car.getSeats() + "");
+        inputAbout.sendKeys(car.getAbout());
+        btnAddCar.click();
     }
 }

@@ -52,8 +52,6 @@ public class AddNewCarTests extends AppiumConfig {
 
     @Test
     public void addNewCarPositiveTest2() {
-
-
         CarDto car = CarDto.builder()
                 .serialNumber("num-" + generatePhone(6))
                 .manufacture("ZAZ")
@@ -70,7 +68,240 @@ public class AddNewCarTests extends AppiumConfig {
         myCarsScreen.goToAddNewCarScreen();
         new AddMyCarScreen(driver).addNewCar(car);
         myCarsScreen.scrollToLastElementAvto();
-        Assert.assertEquals(myCarsScreen.scrollToLastElementAvto(),car.getSerialNumber());
-//        Assert.assertTrue(myCarsScreen.validatePopUpMessage("Car was added!"));
+        Assert.assertEquals(myCarsScreen.scrollToLastElementAvto(), car.getSerialNumber());
+    }
+
+    @Test
+    public void addNewCarPositivetive_lvl_Test_noAbout() {
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1999")
+                .seats(4)
+                .about("")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        myCarsScreen.scrollToLastElementAvto();
+        Assert.assertEquals(myCarsScreen.scrollToLastElementAvto(), car.getSerialNumber());
+    }
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noSeats() {  // BUG!!  seat = 0 adding Car!
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(0)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+   }
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noCity() {
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+    }
+/*
+    @Test
+    public void addNewCarNegative_lvl_Test_PriceZero() {// BUG !!  and if Price < 0 !!!
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(0.0)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(0)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+    }
+*/
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noPrice() {// BUG !!
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(-1.0)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(0)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCarNoPrice(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+    }
+
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noClass() {
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("{carClass=must not be blank}"));
+    }
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noYear() {
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("{year=must not be blank}"));
+    }
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noModel() {
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+    }
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noFuel() {  // BUG!!  adding pass!!!
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCarNoFuel(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+    }
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noManufacture() {
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
+    }
+
+
+    @Test
+    public void addNewCarNegative_lvl_Test_noNumber() {
+        CarDto car = CarDto.builder()
+                .serialNumber("")
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        new AddMyCarScreen(driver).addNewCar(car);
+        Assert.assertTrue(new ErrorScreen(driver)
+                .validateErrorMessage("Fields: Serial number, Manufacture, Model, City, Price per day is required!"));
     }
 }
