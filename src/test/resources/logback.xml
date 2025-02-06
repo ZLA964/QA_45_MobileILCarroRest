@@ -25,6 +25,11 @@
         </encoder>
     </appender>
 
+<!--    <logger name="io.restassured" level="DEBUG" additivity="false">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="FILE"/>-->
+<!--    </logger>-->
+
     <root level="info"> <!-- levels logging     off/error/warning/info/debug/all  -->
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>

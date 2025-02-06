@@ -30,4 +30,20 @@ public class CarDto {
     private String image; //": "string",
     private String owner; //": "string",
     private List<BookedDto> bookedPeriods;
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+
+        CarDto carDto = (CarDto) object;
+        return serialNumber.equals(carDto.serialNumber) && manufacture.equals(carDto.manufacture) && model.equals(carDto.model);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = serialNumber.hashCode();
+        result = 31 * result + manufacture.hashCode();
+        result = 31 * result + model.hashCode();
+        return result;
+    }
 }

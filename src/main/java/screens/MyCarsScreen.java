@@ -61,8 +61,8 @@ public class MyCarsScreen extends BaseScreen {
 
         int heightElement = firstCarList.getSize().getHeight();
         int yMidlElement = yElement +  heightElement/2;
-                System.out.println( firstCarList.getLocation().getY());
-        System.out.println( firstCarList.getSize().getHeight());
+                System.out.println("Y firstCarInList --> " + firstCarList.getLocation().getY());
+        System.out.println("H firstCarInList -->" + firstCarList.getSize().getHeight());
 
         TouchAction<?> touchAction = new TouchAction<>(driver);
         touchAction.longPress(PointOption.point(width/10*9, yMidlElement ))

@@ -11,7 +11,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 import java.util.List;
+import java.util.Locale;
 
 public class SearchScreen extends BaseScreen {
 
@@ -31,40 +35,45 @@ public class SearchScreen extends BaseScreen {
     AndroidElement btnMyCars;
 
     @FindBy(id = "com.telran.ilcarro:id/editLocation")
-    AndroidElement inputLocation;
+    AndroidElement inputCity;
     @FindBy(id = "com.telran.ilcarro:id/editFrom")
-    AndroidElement inputFrom;
+    AndroidElement inputDateFrom;
     @FindBy(id = "com.telran.ilcarro:id/editTo")
-    AndroidElement inputTo;
+    AndroidElement inputDateTo;
     @FindBy(id = "com.telran.ilcarro:id/searchBtn")
     AndroidElement btnYallaSearchCar;
 
     @FindBy(id = "android:id/button1")
-    AndroidElement btnCalendarOk;
+    AndroidElement btnOkCalendar;
 
     @FindBy(id = "android:id/date_picker_header_year")
-    AndroidElement btnYearCalendar;
+    AndroidElement btnYear;
 
     @FindBy(id = "android:id/date_picker_year_picker")
     AndroidElement calendarSelectYear;
     @FindBy(xpath = "//*[@resource-id='android:id/date_picker_year_picker']/*[@resource-id='android:id/text1']")
     List<AndroidElement> yearsOnCalendar;
 
+    @FindBy(id = "android:id/next")
+    AndroidElement btnMonthNext;
+    @FindBy(id = "android:id/prev")
+    AndroidElement btnMonthPrev;
 
-    public void typeLocation(String taxt){
-        inputLocation.sendKeys(taxt);
+
+    public void typeLocation(String taxt) {
+        inputCity.sendKeys(taxt);
     }
 
-    public void typeFrom(String text){
-        inputFrom.sendKeys(text);
+    public void typeFrom(String text) {
+        inputDateFrom.sendKeys(text);
     }
 
-    public void typeTo(String text){
-        inputTo.sendKeys(text);
+    public void typeTo(String text) {
+        inputDateTo.sendKeys(text);
     }
 
-    public void clickBtnSearchCar(){
-        clickWait(btnYallaSearchCar,3);
+    public void clickBtnSearchCar() {
+        clickWait(btnYallaSearchCar, 3);
     }
 
     public void goToRegistrationScreen() {
@@ -102,16 +111,16 @@ public class SearchScreen extends BaseScreen {
         clickWait(btnMyCars, 5);
     }
 
-    public void clickFrom(){
-        inputFrom.click();
+    public void clickFrom() {
+        inputDateFrom.click();
     }
 
-    public void clickTo(){
-        inputTo.click();
+    public void clickTo() {
+        inputDateTo.click();
     }
 
-    public void clickCalendarOk(){
-        btnCalendarOk.click();
+    public void clickCalendarOk() {
+        btnOkCalendar.click();
     }
 
     public void setCalendarFromTO(String dayFrom, String dayTo) {
@@ -122,15 +131,16 @@ public class SearchScreen extends BaseScreen {
     }
 
     private void setCalendar(String date) {
+
         String[] dayArray = date.split("/");
         String yearOfDay = dayArray[2];
         String month = dayArray[1];
         String day = dayArray[0];
-        clickWait(btnYearCalendar,3);
-        new WebDriverWait(driver,5).until(ExpectedConditions.presenceOfElementLocated(By.id( "android:id/date_picker_year_picker")));
+        clickWait(btnYear, 3);
+        new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("android:id/date_picker_year_picker")));
         System.out.println("Years found: " + yearsOnCalendar.size());
         AndroidElement yearForClick = yearsOnCalendar.stream()
-                .filter( y-> yearOfDay.equalsIgnoreCase(y.getText()))
+                .filter(y -> yearOfDay.equalsIgnoreCase(y.getText()))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Year not found: " + yearOfDay));
         yearForClick.click();
@@ -141,4 +151,58 @@ public class SearchScreen extends BaseScreen {
     }
 
 
+    public void findCarWithCalendar(String city, String dateStart, String dateEnd) {
+  //      clickWait(inputCity, 5);  // 12 March 2026
+//        new WebDriverWait(driver,5)
+//                .until(ExpectedConditions.visibilityOfElementLocated
+//                                (By.id("com.telran.ilcarro:id/editFrom")));
+        inputCity.sendKeys(city);
+        inputDateFrom.click();
+        setDateCalendar(dateStart);
+        inputDateTo.click();
+        setDateCalendar(dateEnd);
+    }
+
+    private void setDateCalendar(String date) {
+
+        String[] arrayDate = date.split(" ");
+        // ===== year =====
+        if (LocalDate.now().getYear() != Integer.parseInt(arrayDate[2])) {
+            clickWait(btnYear, 5);
+            new WebDriverWait(driver, 5)
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//*[@text='" + arrayDate[2] + "']")
+                    )).click();
+        }
+        //  =====  month =====
+        int month = returnNumOfMonth(arrayDate[1]);
+        int currentMonth = LocalDate.now().getMonthValue() + 1; // correct for Bag!!!
+        int quantityClick = (month - currentMonth);  // by modul
+        if(quantityClick >  0){
+            for (int i =0 ; i < quantityClick ; i++){
+                clickWait(btnMonthNext,2);
+            }
+        } else if( quantityClick < 0 ) {
+                for (int i =0 ; i < Math.abs(quantityClick) ; i++){
+                    clickWait(btnMonthPrev,2);
+                }
+        }
+
+        new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.elementToBeClickable
+                        (By.xpath("//*[@content-desc='" + date + "']"))).click();
+        btnOkCalendar.click();
+        try {
+            new WebDriverWait(driver, 1)
+                    .until(ExpectedConditions.visibilityOfElementLocated(By.id("android:id/button1")));
+        } catch (TimeoutException e) {
+            System.out.println("calendar closed");
+        }
+    }
+
+    private int returnNumOfMonth(String month){
+        Month month1 = Month.valueOf(month.toUpperCase(Locale.ENGLISH));
+        return month1.getValue();
+    }
 }
+

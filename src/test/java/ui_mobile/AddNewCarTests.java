@@ -1,8 +1,11 @@
 package ui_mobile;
 
 import config.AppiumConfig;
+import config.CarControler;
 import dto.CarDto;
+import dto.CarsDto;
 import dto.UserDto;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -49,6 +52,42 @@ public class AddNewCarTests extends AppiumConfig {
         new AddMyCarScreen(driver).addNewCar(car);
         Assert.assertTrue(myCarsScreen.validatePopUpMessage("Car was added!"));
     }
+
+    @Test
+    public void addNewCarPositive_assur_Test() {
+        myCarsScreen = new MyCarsScreen(driver);
+        myCarsScreen.goToAddNewCarScreen();
+        CarDto car = CarDto.builder()
+                .serialNumber("num-" + generatePhone(6))
+                .manufacture("ZAZ")
+                .model("969")
+                .city("Haifa")
+                .pricePerDay(333.33)
+                .carClass("Hi")
+                .fuel("Gas")
+                .year("1975")
+                .seats(4)
+                .about("best of the best")
+                .build();
+        new AddMyCarScreen(driver).addNewCar(car);
+        CarControler carControler = new CarControler();
+        carControler.login();
+        Response responseBefore = carControler.getUserCar(carControler.tokenDto.getAccessToken());
+        CarDto[] arrayCar = responseBefore.body().as(CarsDto.class).getCars();
+        int index=0;
+        for( CarDto carApi : arrayCar){
+
+            if(carApi.equals(car)) {
+                System.out.println("car->" + carApi);
+            }
+            index++;
+ //           System.out.println("car->" + carDto);
+        }
+        Assert.assertEquals(car, arrayCar[index-1]);
+
+//        Assert.assertTrue(myCarsScreen.validatePopUpMessage("Car was added!"));
+    }
+
 
     @Test
     public void addNewCarPositiveTest2() {
