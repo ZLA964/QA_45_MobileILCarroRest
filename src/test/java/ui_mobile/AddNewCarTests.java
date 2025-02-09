@@ -76,7 +76,6 @@ public class AddNewCarTests extends AppiumConfig {
         CarDto[] arrayCar = responseBefore.body().as(CarsDto.class).getCars();
         int index=0;
         for( CarDto carApi : arrayCar){
-
             if(carApi.equals(car)) {
                 System.out.println("car->" + carApi);
             }
@@ -84,8 +83,6 @@ public class AddNewCarTests extends AppiumConfig {
  //           System.out.println("car->" + carDto);
         }
         Assert.assertEquals(car, arrayCar[index-1]);
-
-//        Assert.assertTrue(myCarsScreen.validatePopUpMessage("Car was added!"));
     }
 
 

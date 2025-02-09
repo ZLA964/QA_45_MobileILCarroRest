@@ -1,8 +1,8 @@
 package helper;
 
-import com.google.gson.Gson;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
+/// import com.google.gson.Gson;
+/// import okhttp3.MediaType;
+/// import okhttp3.OkHttpClient;
 import org.testng.asserts.SoftAssert;
 
 public interface BaseApi {
@@ -12,11 +12,11 @@ public interface BaseApi {
 
     String LOGIN = "/v1/user/login/usernamepassword";
 
-    Gson GSON = new Gson();
+ ///   Gson GSON = new Gson();
 
-    MediaType JSON = MediaType.get("application/json");
+  ///  MediaType JSON = MediaType.get("application/json");
 
-    OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();
+///    OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();
 
     SoftAssert softAssert = new SoftAssert();
     String ADD_NEW_CAR = "/v1/cars";
@@ -24,5 +24,8 @@ public interface BaseApi {
 
     String GET_USER_CARS = "/v1/cars/my";
     String DELETE_CAR = "/v1/cars/";
+
+    String SEARCH = "/v1/cars/search";
+
 
 }

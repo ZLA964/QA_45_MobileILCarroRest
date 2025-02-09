@@ -32,11 +32,10 @@ public class CarDto {
     private List<BookedDto> bookedPeriods;
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
+    public final boolean equals(Object object) {
+        if (!(object instanceof CarDto carDto)) return false;
 
-        CarDto carDto = (CarDto) object;
-        return serialNumber.equals(carDto.serialNumber) && manufacture.equals(carDto.manufacture) && model.equals(carDto.model);
+        return seats == carDto.seats && Double.compare(pricePerDay, carDto.pricePerDay) == 0 && serialNumber.equals(carDto.serialNumber) && manufacture.equals(carDto.manufacture) && model.equals(carDto.model) && year.equals(carDto.year) && fuel.equals(carDto.fuel) && carClass.equals(carDto.carClass) && about.equals(carDto.about) && city.equals(carDto.city);
     }
 
     @Override
@@ -44,6 +43,13 @@ public class CarDto {
         int result = serialNumber.hashCode();
         result = 31 * result + manufacture.hashCode();
         result = 31 * result + model.hashCode();
+        result = 31 * result + year.hashCode();
+        result = 31 * result + fuel.hashCode();
+        result = 31 * result + seats;
+        result = 31 * result + carClass.hashCode();
+        result = 31 * result + Double.hashCode(pricePerDay);
+        result = 31 * result + about.hashCode();
+        result = 31 * result + city.hashCode();
         return result;
     }
 }

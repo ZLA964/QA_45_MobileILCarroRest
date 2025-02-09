@@ -36,5 +36,8 @@ public class RandomUtils {
         return new String(randomString);
     }
 
+    public static int getRandomIndex(int length){
+        return random.nextInt(length);
+    }
 
 }
